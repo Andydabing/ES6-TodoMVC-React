@@ -39,6 +39,10 @@ switch(eventName) {
     case TodoConstants.TODO_DESTROY_COMPLETED:
         _todos.destroyCompleted();
         break;
+
+    case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
+        _todos.toggleAllCompleted();
+        break;
     default:
         return;
 }

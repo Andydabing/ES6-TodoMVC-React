@@ -12,6 +12,11 @@ class TodoActions {
     });
   }
 
+
+  /**
+   * @param  {string} id
+   * @param  {string} text
+   */
   updateText (id, text) {
     AppDispatcher.trigger(TodoConstants.TODO_UPDATE_TEXT, {
       id: id,
@@ -19,10 +24,17 @@ class TodoActions {
     });
   }
 
+  /**
+   * @param  {string} id
+   */
   toggleComplete (id) {
     AppDispatcher.trigger(TodoConstants.TODO_COMPLETE, {
       id: id
     });
+  }
+
+  toggleAllCompleted () {
+    AppDispatcher.trigger(TodoConstants.TODO_TOGGLE_COMPLETE_ALL, {});
   }
 
   destroyCompleted () {
