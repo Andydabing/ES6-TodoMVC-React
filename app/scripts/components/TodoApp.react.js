@@ -36,9 +36,7 @@ class TodoApp {
 		return (
 			<div>
 				<Header />
-				<section id="main">
-					<TodoList todos={this.state.allTodos} />
-				</section>
+				<TodoList todos={this.state.allTodos} />
 				<Footer todos={this.state.allTodos} />
 			</div>
 		)

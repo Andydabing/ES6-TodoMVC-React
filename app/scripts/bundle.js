@@ -218,18 +218,35 @@
 	"use strict";
 	/** @jsx React.DOM */
 	var React = __webpack_require__(/*! react */ 2);
+	var ReactPropTypes = React.PropTypes;
+	
+	var TodoActions = __webpack_require__(/*! ../actions/TodoActions */ 34);
 	var TodoItem = __webpack_require__(/*! ./TodoItem.react */ 12);
 	
-	var TodoList = (function(){var DP$0 = Object.defineProperty;function TodoList() {}DP$0(TodoList, "prototype", {"configurable": false, "enumerable": false, "writable": false});
+	var TodoList = (function(){var DP$0 = Object.defineProperty;function TodoList() {}Object.defineProperties(TodoList.prototype, {propTypes: {"get": propTypes$get$0, "configurable": true, "enumerable": true}});DP$0(TodoList, "prototype", {"configurable": false, "enumerable": false, "writable": false});
+		function propTypes$get$0 () {
+			return {
+				todos: ReactPropTypes.object.isRequired,
+			}
+		}
+	
 		TodoList.prototype.render = function () {
 			var todos = this.props.todos.toJSON().map(function(todo)  {
 				return TodoItem({key: todo.id, todo: todo})
 			});
 			return (
-				React.DOM.ul({id: "todo-list"}, 
-					todos
-				)
+				React.DOM.section({id: "main"}, 
+		        	React.DOM.input({id: "toggle-all", type: "checkbox", onChange: this._onToggleCompleteAll, checked: this.props.todos.areAllCompleted ? 'checked' : ''}), 
+		        	React.DOM.label({htmlFor: "toggle-all"}, "Mark all as completed"), 			
+					React.DOM.ul({id: "todo-list"}, 
+						todos
+					)
+				)			
 			)
+		}
+	
+		TodoList.prototype._onToggleCompleteAll = function () {
+			TodoActions.toggleAllCompleted();
 		}
 	;return TodoList;})();
 	
@@ -341,6 +358,10 @@
 	
 	    case TodoConstants.TODO_DESTROY_COMPLETED:
 	        _todos.destroyCompleted();
+	        break;
+	
+	    case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
+	        _todos.toggleAllCompleted();
 	        break;
 	    default:
 	        return;
@@ -6418,6 +6439,11 @@
 	    });
 	  }
 	
+	
+	  /**
+	   * @param  {string} id
+	   * @param  {string} text
+	   */
 	  TodoActions.prototype.updateText = function (id, text) {
 	    AppDispatcher.trigger(TodoConstants.TODO_UPDATE_TEXT, {
 	      id: id,
@@ -6425,10 +6451,17 @@
 	    });
 	  }
 	
+	  /**
+	   * @param  {string} id
+	   */
 	  TodoActions.prototype.toggleComplete = function (id) {
 	    AppDispatcher.trigger(TodoConstants.TODO_COMPLETE, {
 	      id: id
 	    });
+	  }
+	
+	  TodoActions.prototype.toggleAllCompleted = function () {
+	    AppDispatcher.trigger(TodoConstants.TODO_TOGGLE_COMPLETE_ALL, {});
 	  }
 	
 	  TodoActions.prototype.destroyCompleted = function () {
@@ -35095,7 +35128,7 @@
 	    this.model = TodoModel;
 	    this.localStorage = new LocalStorage('todos');
 	    super$0.call(this, options);
-	  }TodoCollection.prototype = Object.create(super$0.prototype, {"constructor": {"value": TodoCollection, "configurable": true, "writable": true} });DP$0(TodoCollection, "prototype", {"configurable": false, "enumerable": false, "writable": false});
+	  }TodoCollection.prototype = Object.create(super$0.prototype, {"constructor": {"value": TodoCollection, "configurable": true, "writable": true}, areAllCompleted: {"get": areAllCompleted$get$0, "configurable": true, "enumerable": true} });DP$0(TodoCollection, "prototype", {"configurable": false, "enumerable": false, "writable": false});
 	
 	  TodoCollection.prototype.getAll = function () {
 	    return this;
@@ -35107,6 +35140,12 @@
 	
 	  TodoCollection.prototype.getCompleted = function () {
 	    return this.where({completed: true});
+	  }
+	  TodoCollection.prototype.toggleAllCompleted = function () {
+	    this.where({completed: false}).map(function(todo ) {return todo.toggleComplete()});
+	  }
+	  function areAllCompleted$get$0 () {
+	    return this.where({completed: true}).length === this.toJSON().length
 	  }
 	
 	  TodoCollection.prototype.nextId = function () {
@@ -35503,9 +35542,7 @@
 			return (
 				React.DOM.div(null, 
 					Header(null), 
-					React.DOM.section({id: "main"}, 
-						TodoList({todos: this.state.allTodos})
-					), 
+					TodoList({todos: this.state.allTodos}), 
 					Footer({todos: this.state.allTodos})
 				)
 			)

@@ -20,6 +20,12 @@ class TodoCollection extends Backbone.Collection {
   getCompleted () {
     return this.where({completed: true});
   }
+  toggleAllCompleted () {
+    this.where({completed: false}).map(todo => todo.toggleComplete());
+  }
+  get areAllCompleted () {
+    return this.where({completed: true}).length === this.toJSON().length
+  }
 
   nextId () {
   	return "c" + this.toJSON().length + 1;
