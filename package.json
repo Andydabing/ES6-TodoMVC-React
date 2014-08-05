@@ -14,10 +14,13 @@
     "react": "^0.11.1",
     "react-router": "^0.5.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "traceur-loader": "^0.3.0"
+  },
   "scripts": {
     "build": "webpack -c --progress -d -p",
-    "watch": "webpack -c --progress -d -p -w",
+    "watch": "webpack -c --progress -d -w",
+    "http": "python -m SimpleHTTPServer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Edvin Erikson",

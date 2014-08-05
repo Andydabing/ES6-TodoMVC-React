@@ -19,6 +19,16 @@ class TodoActions {
     });
   }
 
+  toggleComplete (id) {
+    AppDispatcher.trigger(TodoConstants.TODO_COMPLETE, {
+      id: id
+    });
+  }
+
+  destroyCompleted () {
+    AppDispatcher.trigger(TodoConstants.TODO_DESTROY_COMPLETED, {});
+  }
+
   /**
    * @param  {string} id
    */

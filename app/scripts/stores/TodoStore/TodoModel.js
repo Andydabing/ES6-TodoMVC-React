@@ -5,6 +5,12 @@ class TodoModel extends Backbone.Model {
       title: '',
       completed: false
     }
+  }
+
+  toggleComplete () {
+  	this.save({
+  		completed: !this.get('completed')
+  	});
   }  
 }
 

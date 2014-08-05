@@ -6,27 +6,42 @@ var _todos = new TodoCollection();
 //fetch from server/localstorage
 _todos.fetch();
 
-AppDispatcher.on('all', (eventName, payload) => {
-  var text;
 
-  switch(eventName) {
+
+AppDispatcher.on('all', function(eventName, payload) {
+
+switch(eventName) {
     case TodoConstants.TODO_CREATE:
-      text = payload.text.trim();
-      if (text !== '') {
-        _todos.create({title: text});
-      }
-      break;
+        var text = payload.text.trim();
+        if (text !== '') {
+            _todos.create({title: text});
+        }
+        break;
 
+    case TodoConstants.TODO_DESTROY:
+        var id = payload.id;
+        _todos.get(id).destroy();
+        break;
+        
     case TodoConstants.TODO_UPDATE_TEXT:
-      text = payload.text.trim();
-      var id = payload.id;
-      if (text !== '') {
-        _todos.get(id).save({title: text});
-      }
-      break;
+        var text = payload.text.trim();
+        var id = payload.id;
+        if (text !== '') {
+            _todos.get(id).save({title: text});
+        }
+        break;
+        
+    case TodoConstants.TODO_COMPLETE:
+        var id = payload.id;
+        _todos.get(id).toggleComplete();
+        break;
+
+    case TodoConstants.TODO_DESTROY_COMPLETED:
+        _todos.destroyCompleted();
+        break;
     default:
-      return;
-  }
+        return;
+}
 
 });
 

@@ -1,4 +1,4 @@
 /** @jsx React.DOM */
 var React = require('react');
-var Router = require('./components/Router.react');
-React.renderComponent(<Router />, document.getElementById('app'));
+var TodoApp = require('./components/TodoApp.react');
+React.renderComponent(<TodoApp />, document.getElementById('todoapp'));

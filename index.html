@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="utf-8">
 	<title>React.js - ES6</title>
+	<link rel="stylesheet" type="text/css" href="app/styles/todomvc-common/base.css">
+	<style type="text/css">
+	#todo-list li .edit {
+		display: inline;
+	}
+	</style>
 </head>
 <body>
+	<section id="todoapp"></section>
     <div id="app"></div>
-
-<!--<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/underscore/underscore.js"></script>
-<script src="bower_components/backbone/backbone.js"></script>-->
+	<footer id="info">
+		<p>Double-click to edit a todo</p>
+		<p>Created by <a href="https://github.com/EdvinErikson">Edvin Erikson</a></p>
+		<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+	</footer>    
 <script src="bower_components/traceur/traceur.js"></script>
-<!--<script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>-->
 <script src="app/scripts/bundle.js"></script>
 </body>
 </html>

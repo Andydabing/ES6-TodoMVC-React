@@ -3,7 +3,9 @@ var React = require('react');
 var Link = require('react-router').Link;
 var TodoStore = require('../stores/TodoStore');
 var TodoList = require('./TodoList.react');
-var TodoForm = require('./TodoForm.react');
+var Header = require('./Header.react');
+var Footer = require('./Footer.react');
+
 
 function getTodoState() {
   return {
@@ -12,7 +14,7 @@ function getTodoState() {
 }
 
 
-class Home {
+class TodoApp {
 
 	getInitialState () {
 		return getTodoState();
@@ -33,14 +35,14 @@ class Home {
 	render () {
 		return (
 			<div>
-				<h1>Home</h1>
-				<span>{"Todos: " + this.state.allTodos.length}</span>
-				<TodoList todos={this.state.allTodos} />
-				<TodoForm />
-				<Link to="about">About</Link>
+				<Header />
+				<section id="main">
+					<TodoList todos={this.state.allTodos} />
+				</section>
+				<Footer todos={this.state.allTodos} />
 			</div>
 		)
 	}
 }
 
-module.exports = React.createClass(Home.prototype);
+module.exports = React.createClass(TodoApp.prototype);

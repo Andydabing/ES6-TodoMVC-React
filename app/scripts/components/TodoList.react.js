@@ -4,11 +4,11 @@ var TodoItem = require('./TodoItem.react');
 
 class TodoList {
 	render () {
-		let todos = this.props.todos.map((todo) => {
-			return <TodoItem key={todo.cid} todo={todo} />
+		let todos = this.props.todos.toJSON().map((todo) => {
+			return <TodoItem key={todo.id} todo={todo} />
 		});
 		return (
-			<ul>
+			<ul id="todo-list">
 				{todos}
 			</ul>
 		)

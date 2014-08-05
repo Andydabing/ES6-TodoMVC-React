@@ -10,7 +10,15 @@ class TodoCollection extends Backbone.Collection {
   }
 
   getAll () {
-    return this.models;
+    return this;
+  }
+
+  destroyCompleted () {
+    this.getCompleted().every(todo => todo.destroy());
+  }
+
+  getCompleted () {
+    return this.where({completed: true});
   }
 
   nextId () {
